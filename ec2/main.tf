@@ -105,7 +105,7 @@ resource "aws_instance" "web" {
   instance_type = "t2.micro"
   #ami = "${lookup(var.aws_amis, var.aws_region)}"
   ami="${data.aws_ami.ubuntu_latest.id}"
-  key_name="id_rsa"
+  key_name="my-laptop-USL011275"
   vpc_security_group_ids = ["${aws_security_group.default.id}"]
   subnet_id = "${aws_subnet.default.id}"
 

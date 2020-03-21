@@ -1,9 +1,10 @@
-# Specify the provider and access details
+# Specify the provider and region
 provider "aws" {
   region = "${var.aws_region}"
 }
 
 # Create a VPC to launch our instances into
+# main route table, default network access control list and default security gets created
 resource "aws_vpc" "default" {
   cidr_block = "10.0.0.0/16"
   enable_dns_hostnames="true"
@@ -14,7 +15,7 @@ resource "aws_subnet" "default" {
   vpc_id                  = "${aws_vpc.default.id}"
   cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = true
-  availability_zone="us-west-2a"
+  availability_zone="us-east-1a"
 }
 
 # Create an internet gateway to give our subnet access to the outside world
@@ -112,11 +113,11 @@ resource "aws_instance" "web" {
   # We run a remote provisioner on the instance after creating it.
   # In this case, we just install nginx and start it. By default,
   # this should be on port 80
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt-get -y update",
-      "sudo apt-get -y install nginx",
-      "sudo service nginx start",
-    ]
-  }
+  #provisioner "remote-exec" {
+  #  inline = [
+  #    "sudo apt-get -y update",
+  #    "sudo apt-get -y install nginx",
+  #    "sudo service nginx start",
+  #  ]
+#  }
 }

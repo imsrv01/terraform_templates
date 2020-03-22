@@ -100,7 +100,7 @@ resource "aws_instance" "web" {
   ami=data.aws_ami.ubuntu_latest.id
 
   # instance type
-  instance_type = var.aws_key_pair
+  instance_type = var.aws_instance_type
 
   # subnet to be used. subnet is associated with a AZ and VPC
   subnet_id = aws_subnet.default.id

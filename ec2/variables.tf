@@ -32,3 +32,7 @@ variable "aws_amis" {
     us-west-2 = "ami-8803e0f0"
   }
 }
+
+variable "private_key" {
+  description = "private key for connection to virtual machines using SSH and remote-execution provisioner"
+}

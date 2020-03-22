@@ -96,12 +96,12 @@ data "aws_ami" "ubuntu_latest" {
 resource "aws_instance" "web" {
   # The connection block tells our provisioner how to
   # communicate with the resource (instance)
-  # connection {
+  connection {
     # The default username for our AMI
     # user = "ubuntu"
-    # private_key="${file(var.private_key_path)}"
+    private_key=var.private_key
     # The connection will use the local SSH agent for authentication.
-  # }
+  }
 
   instance_type = "t2.micro"
   #ami = "${lookup(var.aws_amis, var.aws_region)}"

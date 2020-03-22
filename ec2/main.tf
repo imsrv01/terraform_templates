@@ -20,14 +20,14 @@ resource "aws_subnet" "default" {
 
 # Create an internet gateway to give our subnet access to the outside world
 resource "aws_internet_gateway" "default" {
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = aws_vpc.default.id
 }
 
 # Grant the VPC internet access on its main route table
 resource "aws_route" "internet_access" {
-  route_table_id         = "${aws_vpc.default.main_route_table_id}"
+  route_table_id         = aws_vpc.default.main_route_table_id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = "${aws_internet_gateway.default.id}"
+  gateway_id             = aws_internet_gateway.default.id
 }
 
 # Our default security group to access
@@ -35,7 +35,7 @@ resource "aws_route" "internet_access" {
 resource "aws_security_group" "default" {
   name        = "terraform_example"
   description = "Used in the terraform"
-  vpc_id      = "${aws_vpc.default.id}"
+  vpc_id      = aws_vpc.default.id
 
   # SSH access from anywhere
   ingress {
@@ -105,10 +105,10 @@ resource "aws_instance" "web" {
 
   instance_type = "t2.micro"
   #ami = "${lookup(var.aws_amis, var.aws_region)}"
-  ami="${data.aws_ami.ubuntu_latest.id}"
+  ami=data.aws_ami.ubuntu_latest.id
   key_name="my-laptop-USL011275"
   vpc_security_group_ids = ["${aws_security_group.default.id}"]
-  subnet_id = "${aws_subnet.default.id}"
+  subnet_id = aws_subnet.default.id
 
   # We run a remote provisioner on the instance after creating it.
   # In this case, we just install nginx and start it. By default,
